@@ -232,8 +232,8 @@ New-Item -Path $workshopFilesFolder -ItemType Directory -ErrorAction Ignore |Out
 Download-File -sourceUrl $workshopFilesUrl -destinationFile $workshopFilesFile
 [Reflection.Assembly]::LoadWithPartialName("System.IO.Compression.Filesystem") | Out-Null
 [System.IO.Compression.ZipFile]::ExtractToDirectory($workshopFilesFile, $workshopFilesFolder)
-git config --global user.email "andrius.cyvas@1clickfactory.com"
-git config --global user.name "1clickfactory-student"
+git config --global user.email "d365bctechtr@innovaconsulting.es"
+git config --global user.name "Innova-D365TechTr"
 git config --global merge.tool p4merge
 git config --global mergeool.p4merge.path ''C:\Program Files\Perforce\p4merge.exe''
 ')| Add-Content $downloadWorkshopFilesScript |Out-Null
