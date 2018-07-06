@@ -62,6 +62,7 @@ $ServersToCreate |%{
     
    Log "Running $imageName (this will take a few minutes)"
    New-NavContainer -accept_eula `
+                    -accept_outdated `
                     -containerName $containerName `
                     -auth Windows `
                     -includeCSide `
@@ -142,6 +143,7 @@ $containerName= 'navdemo3'
   
  Log "Running $containerName (this will take a few minutes)"
    New-NavContainer -accept_eula `
+                    -accept_outdated `
                     -containerName $containerName `
                     -auth Windows `
                     -includeCSide `
