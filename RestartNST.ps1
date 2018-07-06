@@ -1,0 +1,1 @@
+set-navserverinstance NAV -restart -force
