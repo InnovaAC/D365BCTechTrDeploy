@@ -16,7 +16,7 @@ docker ps --filter name=$containerName -a -q | % {
     docker rm $_ -f | Out-Null
 }
 
-$BackupsUrl = "https://www.dropbox.com/s/5jh0g0nqq6df4iq/DBBackups.zip?dl=1"
+$BackupsUrl = "https://www.dropbox.com/s/rd8aogbd0qhzl50/DBBackups.zip?dl=1"
 $BackupFolder = "C:\DOWNLOAD\Backups"
 $Filename = "$BackupFolder\dbBackups.zip"
 New-Item $BackupFolder -itemtype directory -ErrorAction ignore | Out-Null

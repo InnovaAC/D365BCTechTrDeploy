@@ -1,7 +1,7 @@
 #usage initialize.ps1
 param
 (
-       [string]$templateLink           = "https://raw.githubusercontent.com/Microsoft/nav-arm-templates/master/navdeveloperpreview.json",
+       [string]$templateLink           = "https://raw.githubusercontent.com/InnovaAC/D365BCTechTrain/master/initialize.ps1",
        [string]$containerName          = "navserver",
        [string]$hostName               = "",
        [string]$vmAdminUsername        = "vmadmin",
@@ -218,7 +218,7 @@ if ($dnsidentity.StartsWith("*")) {
 ') | Add-Content "c:\myfolder\SetupCertificate.ps1"
 }
 
-$workshopFilesUrl = 'https://www.dropbox.com/s/xir0czdlv3w4muw/Workshopfiles.zip?dl=1'
+$workshopFilesUrl = 'https://www.dropbox.com/s/kb6ojatuqrquer0/Workshopfiles.zip?dl=1'
 
 #1CF custom download of workshop files
 $downloadWorkshopFilesScript = 'c:\Demo\DownloadWorkshopFiles\DownloadWorkshopFiles.ps1'

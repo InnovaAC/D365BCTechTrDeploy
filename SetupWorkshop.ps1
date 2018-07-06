@@ -23,7 +23,7 @@ try {
     #SQL 2014 
     #$sqlrepbuilderURL= "https://download.microsoft.com/download/2/E/1/2E1C4993-7B72-46A4-93FF-3C3DFBB2CEE0/ENU/x86/ReportBuilder3.msi"
     #SQL 2016
-    $sqlrepbuilderURL= "https://www.dropbox.com/s/4lczxyc5pua0wa8/ReportBuilder3.msi?dl=1"
+    $sqlrepbuilderURL= "https://www.dropbox.com/s/9i4leih5lbbn7zb/ReportBuilder3.msi?dl=1"
     
     $sqlrepbuilderPath = "c:\download\ReportBuilder3.msi"
 
@@ -32,7 +32,7 @@ try {
 
     #1CF Setup GIT
     Log "Installing GIT"
-    $gitUrl = "https://www.dropbox.com/s/k5hhducpe843h1g/git.exe?dl=1"
+    $gitUrl = "https://www.dropbox.com/s/ca9dco6eul629xp/git.exe?dl=1"
     $gitSavePath = "C:\Download\git.exe"
 
     Download-File -sourceUrl $gitUrl -destinationFile $gitSavePath
@@ -43,7 +43,7 @@ try {
     #1CF Setup P4Merge
 
     Log "Installing P4Merge"
-    $p4mUrl = "https://www.dropbox.com/s/ilpzj91hrm304ze/p4vinst.exe?dl=1"
+    $p4mUrl = "https://www.dropbox.com/s/7gtooe27lvgd6c1/p4vinst.exe?dl=1"
     $p4mSavePath = "C:\Download\p4m.exe"
 
     Download-File -sourceUrl $p4mUrl -destinationFile $p4mSavePath
@@ -53,7 +53,7 @@ try {
 
     #1CF Setup Chrome
     Log "Installing Chrome"
-    $chromeUrl = "https://www.dropbox.com/s/dxp79gn45k3rzd5/ChromeSetup.exe?dl=1"
+    $chromeUrl = "https://www.dropbox.com/s/09aqq7qdvat0ttk/ChromeSetup.exe?dl=1"
     $chromeSavePath = "C:\Download\chrome.exe"
 
     Download-File -sourceUrl $chromeUrl -destinationFile $chromeSavePath
