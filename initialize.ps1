@@ -1,7 +1,7 @@
 #usage initialize.ps1
 param
 (
-       [string]$templateLink           = "https://raw.githubusercontent.com/InnovaAC/D365BCTechTrDeploy/master/initialize.ps1",
+       [string]$templateLink           = "https://raw.githubusercontent.com/Microsoft/nav-arm-templates/master/navdeveloperpreview.json",
        [string]$containerName          = "navserver",
        [string]$hostName               = "",
        [string]$vmAdminUsername        = "vmadmin",
