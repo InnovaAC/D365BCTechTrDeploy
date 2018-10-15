@@ -11,10 +11,10 @@ Import-Module -name navcontainerhelper -DisableNameChecking
 
 Log -color Green "Setting up Desktop Experience"
 
-#$codeCmd = "C:\Program Files\Microsoft VS Code\bin\Code.cmd"
-#$codeExe = "C:\Program Files\Microsoft VS Code\Code.exe"
-$codeCmd = "C:\Users\student\AppData\Local\Programs\Microsoft VS Code\bin\Code.cmd"
-$codeExe = "C:\Users\student\AppData\Local\Programs\Microsoft VS Code\Code.exe"
+$codeCmd = "C:\Program Files\Microsoft VS Code\bin\Code.cmd"
+$codeExe = "C:\Program Files\Microsoft VS Code\Code.exe"
+#$codeCmd = "C:\Users\student\AppData\Local\Programs\Microsoft VS Code\bin\Code.cmd"
+#$codeExe = "C:\Users\student\AppData\Local\Programs\Microsoft VS Code\Code.exe"
 
 $firsttime = (!(Test-Path $codeExe))
 $disableVsCodeUpdate = $false
