@@ -11,8 +11,11 @@ Import-Module -name navcontainerhelper -DisableNameChecking
 
 Log -color Green "Setting up Desktop Experience"
 
-$codeCmd = "C:\Program Files\Microsoft VS Code\bin\Code.cmd"
-$codeExe = "C:\Program Files\Microsoft VS Code\Code.exe"
+#$codeCmd = "C:\Program Files\Microsoft VS Code\bin\Code.cmd"
+#$codeExe = "C:\Program Files\Microsoft VS Code\Code.exe"
+$codeCmd = "C:\Users\student\AppData\Local\Programs\Microsoft VS Code\bin\Code.cmd"
+$codeExe = "C:\Users\student\AppData\Local\Programs\Microsoft VS Code\Code.exe"
+
 $firsttime = (!(Test-Path $codeExe))
 $disableVsCodeUpdate = $false
 
@@ -22,7 +25,8 @@ if ($firsttime) {
 
     New-Item $Folder -itemtype directory -ErrorAction ignore | Out-Null
     if (!(Test-Path $Filename)) {
-        $sourceUrl = "https://go.microsoft.com/fwlink/?Linkid=852157"
+#        $sourceUrl = "https://go.microsoft.com/fwlink/?Linkid=852157"
+        $sourceUrl = "https://www.dropbox.com/s/w0ecxm4gqslrbp5/vscode.exe?dl=1"
 
         Download-File -SourceUrl $sourceUrl -destinationFile $Filename
     }
@@ -31,20 +35,20 @@ if ($firsttime) {
     $setupParameters = “/VerySilent /CloseApplications /NoCancel /LoadInf=""c:\demo\vscode.inf"" /MERGETASKS=!runcode"
     Start-Process -FilePath $Filename -WorkingDirectory $Folder -ArgumentList $setupParameters -Wait -Passthru | Out-Null
 
-    Log "Downloading samples"
-    $Folder = "C:\DOWNLOAD"
-    $Filename = "$Folder\samples.zip"
-    Download-File -sourceUrl "https://www.github.com/Microsoft/AL/archive/master.zip" -destinationFile $filename
+#    Log "Downloading samples"
+#    $Folder = "C:\DOWNLOAD"
+#    $Filename = "$Folder\samples.zip"
+#    Download-File -sourceUrl "https://www.github.com/Microsoft/AL/archive/master.zip" -destinationFile $filename
 
-    Remove-Item -Path "$folder\AL-master" -Force -Recurse -ErrorAction Ignore | Out-null
-    [Reflection.Assembly]::LoadWithPartialName("System.IO.Compression.Filesystem") | Out-Null
-    [System.IO.Compression.ZipFile]::ExtractToDirectory($filename, $folder)
+#    Remove-Item -Path "$folder\AL-master" -Force -Recurse -ErrorAction Ignore | Out-null
+#    [Reflection.Assembly]::LoadWithPartialName("System.IO.Compression.Filesystem") | Out-Null
+#    [System.IO.Compression.ZipFile]::ExtractToDirectory($filename, $folder)
     
-    $alFolder = "$([Environment]::GetFolderPath("MyDocuments"))\AL"
-    Remove-Item -Path "$alFolder\Samples" -Recurse -Force -ErrorAction Ignore | Out-Null
-    New-Item -Path "$alFolder\Samples" -ItemType Directory -Force -ErrorAction Ignore | Out-Null
-    Copy-Item -Path "$folder\AL-master\samples\*" -Destination "$alFolder\samples" -Recurse -ErrorAction Ignore
-    Copy-Item -Path "$folder\AL-master\snippets\*" -Destination "$alFolder\snippets" -Recurse -ErrorAction Ignore
+#    $alFolder = "$([Environment]::GetFolderPath("MyDocuments"))\AL"
+#    Remove-Item -Path "$alFolder\Samples" -Recurse -Force -ErrorAction Ignore | Out-Null
+#    New-Item -Path "$alFolder\Samples" -ItemType Directory -Force -ErrorAction Ignore | Out-Null
+#    Copy-Item -Path "$folder\AL-master\samples\*" -Destination "$alFolder\samples" -Recurse -ErrorAction Ignore
+#    Copy-Item -Path "$folder\AL-master\snippets\*" -Destination "$alFolder\snippets" -Recurse -ErrorAction Ignore
 }
 
 if (Test-Path "C:\Demo\Extensions\$containerName\*.vsix") {
