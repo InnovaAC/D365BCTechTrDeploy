@@ -68,6 +68,13 @@
                 "Description": "Optional: Specify a secure Url of your NAV Partner License File for the developer preview. If you do not specify a license file Url here, you will have to upload the license manually later."
             }
         },
+        "LicenseFileUriBCT": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "Description": "Optional Innova: Specify a secure Url of your NAV Partner License File for BC Translate. If you do not specify a license file Url here, you will have to upload the license manually later."
+            }
+        },
         "RunWindowsUpdate": {
 		    "type": "string",
             "defaultValue": "No",
