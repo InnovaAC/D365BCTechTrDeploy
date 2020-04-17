@@ -95,6 +95,8 @@ if (Test-Path $finalSetupScript) {
 
 if ($RunWindowsUpdate -eq "Yes") {
     Log "Installing Windows Updates"
+    #TLS12 need from April'20
+    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     install-module PSWindowsUpdate -force
     Get-WUInstall -install -acceptall -autoreboot | % { Log ($_.Status + " " + $_.KB + " " +$_.Title) }
     Log "Windows updates installed"
