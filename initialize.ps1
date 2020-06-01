@@ -203,7 +203,7 @@ if ($workshopFilesUrl -ne "") {
 }
 
 Log "Install Nav Container Helper from PowerShell Gallery"
-#TLS12 need from April'20
+#TLS12 need from April'20 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 #Install-Module -Name navcontainerhelper -RequiredVersion 0.2.5.1 -Force
 Install-Module -Name navcontainerhelper -Force
