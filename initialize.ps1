@@ -8,7 +8,7 @@ param
        [string]$navAdminUsername       = "admin",
        [string]$adminPassword          = "P@ssword1",
 #       [string]$navDockerImage         = "microsoft/dynamics-nav:devpreview-finus",
-       [string]$navDockerImage         = "mcr.microsoft.com/businesscentral/sandbox:14.5.35970.0-es",       
+       [string]$navDockerImage         = "mcr.microsoft.com/businesscentral/onprem:14.5.35970.0-es-ltsc2016",       
        [string]$registryUsername       = "",
        [string]$registryPassword       = "",
        [string]$appBacpacUri           = "",

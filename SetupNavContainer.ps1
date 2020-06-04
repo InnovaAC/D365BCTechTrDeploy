@@ -66,7 +66,6 @@ $ServersToCreate | % {
         -containerName $containerName `
         -auth Windows `
         -includeCSide `
-#        -useGenericImage "mcr.microsoft.com/dynamicsnav:10.0.14393.3506-generic" `
         -useBestContainerOS `
         -doNotExportObjectsToText `
         -credential $credential `
