@@ -2,7 +2,7 @@
 
 try {
     $Folder = "C:\DOWNLOAD\AdobeReader"
-    $Filename = "$Folder\AdbeRdr11010_en_US.exe"
+    #$Filename = "$Folder\AdbeRdr11010_en_US.exe"
     New-Item $Folder -itemtype directory -ErrorAction ignore | Out-Null
     
     #if (!(Test-Path $Filename)) {
@@ -27,7 +27,7 @@ try {
     
     $sqlrepbuilderPath = "c:\download\ReportBuilder3.msi"
 
-    Download-File -sourceUrl $sqlrepbuilderURL -destinationFile  $sqlrepbuilderPath
+    Get-DownloadFile -sourceUrl $sqlrepbuilderURL -destinationFile  $sqlrepbuilderPath
     Start-Process "C:\Windows\System32\msiexec.exe" -argumentList "/i $sqlrepbuilderPath /quiet" -wait
 
     #1CF Setup GIT
@@ -35,7 +35,7 @@ try {
     $gitUrl = "https://www.dropbox.com/s/ca9dco6eul629xp/git.exe?dl=1"
     $gitSavePath = "C:\Download\git.exe"
 
-    Download-File -sourceUrl $gitUrl -destinationFile $gitSavePath
+    Get-DownloadFile -sourceUrl $gitUrl -destinationFile $gitSavePath
     #$commandLineGitOptions = '/Dir="G:\Git" /SetupType=default /SP- /VERYSILENT /SUPPRESSMSGBOXES /FORCECLOSEAPPLICATIONS'
     $commandLineGitOptions = '/SetupType=default /SP- /VERYSILENT /SUPPRESSMSGBOXES /FORCECLOSEAPPLICATIONS'
     Start-Process -Wait -FilePath $gitSavePath -ArgumentList $commandLineGitOptions
@@ -46,7 +46,7 @@ try {
     $p4mUrl = "https://www.dropbox.com/s/7gtooe27lvgd6c1/p4vinst.exe?dl=1"
     $p4mSavePath = "C:\Download\p4m.exe"
 
-    Download-File -sourceUrl $p4mUrl -destinationFile $p4mSavePath
+    Get-DownloadFile -sourceUrl $p4mUrl -destinationFile $p4mSavePath
     #$commandLineMergeOptions = '/b"C:\Downloads\p4vinst64.exe" /S /V"/qn ALLUSERS=1 REBOOT=ReallySuppress"'
     $commandLineMergeOptions = '/S /V"/qn ALLUSERS=1 REBOOT=ReallySuppress"'
     Start-Process -Wait -FilePath $p4mSavePath -ArgumentList $commandLineMergeOptions
@@ -56,7 +56,7 @@ try {
     $chromeUrl = "https://www.dropbox.com/s/09aqq7qdvat0ttk/ChromeSetup.exe?dl=1"
     $chromeSavePath = "C:\Download\chrome.exe"
 
-    Download-File -sourceUrl $chromeUrl -destinationFile $chromeSavePath
+    Get-DownloadFile -sourceUrl $chromeUrl -destinationFile $chromeSavePath
     Start-Process -FilePath $chromeSavePath -Args "/silent /install" -Verb RunAs -Wait
     Log "Chrome Installed"
 
@@ -65,7 +65,7 @@ try {
     # $signtoolPath = "C:\Download\winsdk_web.exe"
     # $commandLineSignToolOptions = '/SetupType=default /SP- /VERYSILENT /SUPPRESSMSGBOXES /FORCECLOSEAPPLICATIONS '
     
-    # Download-File -sourceUrl $SignToolUrl -destinationFile $signtoolPath
+    # Get-DownloadFile -sourceUrl $SignToolUrl -destinationFile $signtoolPath
     # Start-Process -Wait -FilePath $signtoolPath -ArgumentList $commandLineSignToolOptions
     
     Log "Updating navsip.dll for signtool"

@@ -11,7 +11,7 @@ Import-Module -name navcontainerhelper -DisableNameChecking
 
 $imageName = $navDockerImage.Split(',')[0]
 
-docker ps --filter name=$containerName -a -q | % {
+docker ps --filter name=$containerName -a -q | ForEach-Object {
     Log "Removing container $containerName"
     docker rm $_ -f | Out-Null
 }
@@ -21,12 +21,12 @@ $BackupFolder = "C:\DOWNLOAD\Backups"
 $Filename = "$BackupFolder\dbBackups.zip"
 New-Item $BackupFolder -itemtype directory -ErrorAction ignore | Out-Null
 if (!(Test-Path $Filename)) {
-    Download-File -SourceUrl $BackupsUrl  -destinationFile $Filename
+    Get-DownloadFile -SourceUrl $BackupsUrl  -destinationFile $Filename
 }
 $inspect = docker inspect $imageName | ConvertFrom-Json
 $country = $inspect.Config.Labels.country
 $navVersion = $inspect.Config.Labels.version
-$nav = $inspect.Config.Labels.nav
+#$nav = $inspect.Config.Labels.nav
 $cu = $inspect.Config.Labels.cu
 $locale = Get-LocaleFromCountry $country
 
@@ -34,7 +34,7 @@ $locale = Get-LocaleFromCountry $country
 [System.IO.Compression.ZipFile]::ExtractToDirectory($Filename, $BackupFolder )
 
 $ServersToCreate = Import-Csv "c:\demo\servers.csv" 
-$ServersToCreate | % {
+$ServersToCreate | ForEach-Object {
     
     $containerName = $_.Server
     $bakupPath = "$BackupFolder\$($_.Backup)"
@@ -56,7 +56,7 @@ $ServersToCreate | % {
     #"--publish  7046-7049:7046-7049",                              
     #"
     $myScripts = @()
-    Get-ChildItem -Path "c:\myfolder" | % { $myscripts += $_.FullName }
+    Get-ChildItem -Path "c:\myfolder" | ForEach-Object { $myscripts += $_.FullName }
     $myScripts += $bakupPath;
     $myScripts += 'C:\DEMO\RestartNST.ps1';  
     
@@ -115,7 +115,7 @@ if (Test-Path 'c:\inetpub\wwwroot\http\NAV' -PathType Container) {
     }
 
     Log -color Green "Container output"
-    docker logs $containerName | % { log $_ }
+    docker logs $containerName | ForEach-Object { log $_ }
 
     Log -color Green "Container setup complete!"
 

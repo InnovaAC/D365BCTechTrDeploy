@@ -39,11 +39,11 @@ function Log([string]$line, [string]$color = "Gray") {
     ("<font color=""$color"">" + [DateTime]::Now.ToString([System.Globalization.DateTimeFormatInfo]::CurrentInfo.ShortTimePattern.replace(":mm",":mm:ss")) + " $line</font>") | Add-Content -Path "c:\demo\status.txt"
 }
 
-function Download-File([string]$sourceUrl, [string]$destinationFile)
+function Get-DownloadFile([string]$sourceUrl, [string]$destinationFile)
 {
     Log "Downloading $destinationFile"
     Remove-Item -Path $destinationFile -Force -ErrorAction Ignore
-#TLS12 need for Download from Jan21
+    #TLS12 need for Download from Jan21
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     (New-Object System.Net.WebClient).DownloadFile($sourceUrl, $destinationFile)
 }
@@ -94,7 +94,7 @@ if (Test-Path $settingsScript) {
 #   demo
 #
 
-$includeWindowsClient = $true
+#$includeWindowsClient = $true
 
 if (Test-Path -Path "c:\DEMO\Status.txt" -PathType Leaf) {
     Log "VM already initialized."
@@ -118,11 +118,11 @@ New-Item -Path "C:\DOWNLOAD" -ItemType Directory -ErrorAction Ignore | Out-Null
 Log "Installing Internet Information Server (this might take a few minutes)"
 Add-WindowsFeature Web-Server,web-Asp-Net45
 Remove-Item -Path "C:\inetpub\wwwroot\iisstart.*" -Force
-Download-File -sourceUrl "${scriptPath}Default.aspx"            -destinationFile "C:\inetpub\wwwroot\default.aspx"
-Download-File -sourceUrl "${scriptPath}status.aspx"             -destinationFile "C:\inetpub\wwwroot\status.aspx"
-Download-File -sourceUrl "${scriptPath}line.png"                -destinationFile "C:\inetpub\wwwroot\line.png"
-Download-File -sourceUrl "${scriptPath}Microsoft.png"           -destinationFile "C:\inetpub\wwwroot\Microsoft.png"
-Download-File -sourceUrl "${scriptPath}web.config"              -destinationFile "C:\inetpub\wwwroot\web.config"
+Get-DownloadFile -sourceUrl "${scriptPath}Default.aspx"            -destinationFile "C:\inetpub\wwwroot\default.aspx"
+Get-DownloadFile -sourceUrl "${scriptPath}status.aspx"             -destinationFile "C:\inetpub\wwwroot\status.aspx"
+Get-DownloadFile -sourceUrl "${scriptPath}line.png"                -destinationFile "C:\inetpub\wwwroot\line.png"
+Get-DownloadFile -sourceUrl "${scriptPath}Microsoft.png"           -destinationFile "C:\inetpub\wwwroot\Microsoft.png"
+Get-DownloadFile -sourceUrl "${scriptPath}web.config"              -destinationFile "C:\inetpub\wwwroot\web.config"
 
 $title = 'Dynamics NAV Container Host'
 [System.IO.File]::WriteAllText("C:\inetpub\wwwroot\title.txt", $title)
@@ -150,7 +150,7 @@ $setupWorkshopScript = "c:\demo\SetupWorkshop.ps1"
 $setupVmScript = "c:\demo\SetupVm.ps1"
 $setupNavContainerScript = "c:\demo\SetupNavContainer.ps1"
 
-Download-File -sourceUrl "${scriptPath}SetupNavUsers.ps1" -destinationFile "c:\myfolder\SetupNavUsers.ps1"
+Get-DownloadFile -sourceUrl "${scriptPath}SetupNavUsers.ps1" -destinationFile "c:\myfolder\SetupNavUsers.ps1"
 
 if ($vmAdminUsername -ne $navAdminUsername) {
     '. "c:\run\SetupWindowsUsers.ps1"
@@ -164,35 +164,35 @@ if ($vmAdminUsername -ne $navAdminUsername) {
     Add-LocalGroupMember -Group administrators -Member $hostUsername -ErrorAction Ignore' | Set-Content "c:\myfolder\SetupWindowsUsers.ps1"
 }
 
-Download-File -sourceUrl "${scriptPath}SetupDesktop.ps1"      -destinationFile $setupDesktopScript
-Download-File -sourceUrl "${scriptPath}SetupWorkshop.ps1"      -destinationFile $setupWorkshopScript
-Download-File -sourceUrl "${scriptPath}SetupNavContainer.ps1" -destinationFile $setupNavContainerScript
-Download-File -sourceUrl "${scriptPath}SetupVm.ps1"           -destinationFile $setupVmScript
-Download-File -sourceUrl "${scriptPath}SetupStart.ps1"        -destinationFile $setupStartScript
-Download-File -sourceUrl "${scriptPath}Servers.csv" -destinationFile 'C:\DEMO\Servers.csv' #1CF
-Download-File -sourceUrl "${scriptPath}Install-VS2017Community.ps1" -destinationFile "C:\DEMO\Install-VS2017Community.ps1"
-Download-File -sourceUrl "${scriptPath}RestartNST.ps1" -destinationFile "C:\DEMO\RestartNST.ps1"
+Get-DownloadFile -sourceUrl "${scriptPath}SetupDesktop.ps1"      -destinationFile $setupDesktopScript
+Get-DownloadFile -sourceUrl "${scriptPath}SetupWorkshop.ps1"      -destinationFile $setupWorkshopScript
+Get-DownloadFile -sourceUrl "${scriptPath}SetupNavContainer.ps1" -destinationFile $setupNavContainerScript
+Get-DownloadFile -sourceUrl "${scriptPath}SetupVm.ps1"           -destinationFile $setupVmScript
+Get-DownloadFile -sourceUrl "${scriptPath}SetupStart.ps1"        -destinationFile $setupStartScript
+Get-DownloadFile -sourceUrl "${scriptPath}Servers.csv" -destinationFile 'C:\DEMO\Servers.csv' #1CF
+Get-DownloadFile -sourceUrl "${scriptPath}Install-VS2017Community.ps1" -destinationFile "C:\DEMO\Install-VS2017Community.ps1"
+Get-DownloadFile -sourceUrl "${scriptPath}RestartNST.ps1" -destinationFile "C:\DEMO\RestartNST.ps1"
 
 
 if ($finalSetupScriptUrl) {
     $finalSetupScript = "c:\demo\FinalSetupScript.ps1"
-    Download-File -sourceUrl $finalSetupScriptUrl -destinationFile $finalSetupScript
+    Get-DownloadFile -sourceUrl $finalSetupScriptUrl -destinationFile $finalSetupScript
 }
 
 
 if ($licenseFileUri -ne "") {
-    Download-File -sourceUrl $licenseFileUri -destinationFile "c:\demo\license.flf"
+    Get-DownloadFile -sourceUrl $licenseFileUri -destinationFile "c:\demo\license.flf"
 }
 
 if ($fobFileUrl -ne "") {
-    Download-File -sourceUrl $fobFileUrl -destinationFile "c:\demo\objects.fob"
+    Get-DownloadFile -sourceUrl $fobFileUrl -destinationFile "c:\demo\objects.fob"
 }
 
 if ($workshopFilesUrl -ne "") {
     $workshopFilesFolder = "c:\WorkshopFiles"
     $workshopFilesFile = "C:\DOWNLOAD\WorkshopFiles.zip"
     New-Item -Path $workshopFilesFolder -ItemType Directory -ErrorAction Ignore | Out-Null
-	Download-File -sourceUrl $workshopFilesUrl -destinationFile $workshopFilesFile
+	Get-DownloadFile -sourceUrl $workshopFilesUrl -destinationFile $workshopFilesFile
     Log "Unpacking Workshop Files to $WorkshopFilesFolder"
 	[Reflection.Assembly]::LoadWithPartialName("System.IO.Compression.Filesystem") | Out-Null
 	[System.IO.Compression.ZipFile]::ExtractToDirectory($workshopFilesFile, $workshopFilesFolder)
@@ -206,7 +206,7 @@ Install-Module -Name navcontainerhelper -Force
 Import-Module -Name navcontainerhelper -DisableNameChecking
 
 if ($certificatePfxUrl -ne "" -and $certificatePfxPassword -ne "") {
-    Download-File -sourceUrl $certificatePfxUrl -destinationFile "c:\demo\certificate.pfx"
+    Get-DownloadFile -sourceUrl $certificatePfxUrl -destinationFile "c:\demo\certificate.pfx"
 
 ('$certificatePfxPassword = "'+$certificatePfxPassword+'"
 $certificatePfxFile = "c:\demo\certificate.pfx"
@@ -235,7 +235,7 @@ $workshopFilesFolder = "c:\WorkshopFiles"
 $workshopFilesFile = "c:\demo\workshopFiles.zip"
 Remove-Item $workshopFilesFolder -Force -Recurse |Out-Null
 New-Item -Path $workshopFilesFolder -ItemType Directory -ErrorAction Ignore |Out-Null
-Download-File -sourceUrl $workshopFilesUrl -destinationFile $workshopFilesFile
+Get-DownloadFile -sourceUrl $workshopFilesUrl -destinationFile $workshopFilesFile
 [Reflection.Assembly]::LoadWithPartialName("System.IO.Compression.Filesystem") | Out-Null
 [System.IO.Compression.ZipFile]::ExtractToDirectory($workshopFilesFile, $workshopFilesFolder)
 git config --global user.email "d365bctechtr@innovaconsulting.es"
