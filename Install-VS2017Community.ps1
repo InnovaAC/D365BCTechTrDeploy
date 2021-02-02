@@ -12,6 +12,8 @@ New-Item $Folder -itemtype directory -ErrorAction ignore | Out-Null
 if (!(Test-Path $Filename)) {
     Log "Downloading Visual Studio 2017 Community Setup Program"
     $WebClient = New-Object System.Net.WebClient
+#TLS12 need for Download from Jan21
+    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12    
     $WebClient.DownloadFile("https://aka.ms/vs/15/release/vs_community.exe", $Filename)
 }
 

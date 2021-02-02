@@ -12,7 +12,8 @@ param
        [string]$registryUsername       = "",
        [string]$registryPassword       = "",
        [string]$appBacpacUri           = "",
-       [string]$tenantBacpacUri        = "",
+       [string]$tenantBacpacUri        = "",#TLS12 need for Download from Jan21
+       [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
        [string]$clickonce              = "Y",
        [string]$licenseFileUri         = "",
        [string]$certificatePfxUrl      = "",
@@ -43,6 +44,8 @@ function Download-File([string]$sourceUrl, [string]$destinationFile)
 {
     Log "Downloading $destinationFile"
     Remove-Item -Path $destinationFile -Force -ErrorAction Ignore
+#TLS12 need for Download from Jan21
+    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     (New-Object System.Net.WebClient).DownloadFile($sourceUrl, $destinationFile)
 }
 
