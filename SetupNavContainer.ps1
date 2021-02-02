@@ -21,7 +21,7 @@ $BackupFolder = "C:\DOWNLOAD\Backups"
 $Filename = "$BackupFolder\dbBackups.zip"
 New-Item $BackupFolder -itemtype directory -ErrorAction ignore | Out-Null
 if (!(Test-Path $Filename)) {
-    Get-DownloadFile -SourceUrl $BackupsUrl  -destinationFile $Filename
+    Download-File -SourceUrl $BackupsUrl  -destinationFile $Filename
 }
 $inspect = docker inspect $imageName | ConvertFrom-Json
 $country = $inspect.Config.Labels.country

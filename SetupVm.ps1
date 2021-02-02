@@ -57,7 +57,7 @@ Log "Installing Visual C++ Redist"
 #$vcRedistUrl = "https://download.microsoft.com/download/2/E/6/2E61CFA4-993B-4DD4-91DA-3737CD5CD6E3/vcredist_x86.exe"
 $vcRedistUrl = "https://www.dropbox.com/s/49136h0xydxfj9b/vcredist_x86.exe?dl=1"
 $vcRedistFile = "C:\DOWNLOAD\vcredist_x86.exe"
-Get-DownloadFile -sourceUrl $vcRedistUrl -destinationFile $vcRedistFile
+Download-File -sourceUrl $vcRedistUrl -destinationFile $vcRedistFile
 Start-Process $vcRedistFile -argumentList "/q" -wait
 
 Log "Installing SQL Native Client"
@@ -65,7 +65,7 @@ Log "Installing SQL Native Client"
 #$sqlncliUrl = "https://download.microsoft.com/download/3/A/6/3A632674-A016-4E31-A675-94BE390EA739/ENU/x64/sqlncli.msi"
 $sqlncliUrl = "https://www.dropbox.com/s/u0uhsjpdg4lebqx/sqlncli.msi?dl=1"
 $sqlncliFile = "C:\DOWNLOAD\sqlncli.msi"
-Get-DownloadFile -sourceUrl $sqlncliUrl -destinationFile $sqlncliFile
+Download-File -sourceUrl $sqlncliUrl -destinationFile $sqlncliFile
 Start-Process "C:\Windows\System32\msiexec.exe" -argumentList "/i $sqlncliFile ADDLOCAL=ALL IACCEPTSQLNCLILICENSETERMS=YES /qn" -wait
 
 Log "Installing OpenXML 2.5"
@@ -73,7 +73,7 @@ Log "Installing OpenXML 2.5"
 #$openXmlUrl = "https://download.microsoft.com/download/5/5/3/553C731E-9333-40FB-ADE3-E02DC9643B31/OpenXMLSDKV25.msi"
 $openXmlUrl = "https://www.dropbox.com/s/px4b99szlvts8nj/OpenXMLSDKV25.msi?dl=1"
 $openXmlFile = "C:\DOWNLOAD\OpenXMLSDKV25.msi"
-Get-DownloadFile -sourceUrl $openXmlUrl -destinationFile $openXmlFile
+Download-File -sourceUrl $openXmlUrl -destinationFile $openXmlFile
 Start-Process $openXmlFile -argumentList "/qn /q /passive" -wait
 
 . "c:\demo\SetupNavContainer.ps1"

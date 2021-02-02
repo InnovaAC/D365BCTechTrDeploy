@@ -28,7 +28,7 @@ if ($firsttime) {
 #        $sourceUrl = "https://go.microsoft.com/fwlink/?Linkid=852157"
         $sourceUrl = "https://www.dropbox.com/s/w0ecxm4gqslrbp5/vscode.exe?dl=1"
 
-        Get-DownloadFile -SourceUrl $sourceUrl -destinationFile $Filename
+        Download-File -SourceUrl $sourceUrl -destinationFile $Filename
     }
     
     Log "Installing Visual Studio Code (this might take a few minutes)"
@@ -38,7 +38,7 @@ if ($firsttime) {
 #    Log "Downloading samples"
 #    $Folder = "C:\DOWNLOAD"
 #    $Filename = "$Folder\samples.zip"
-#    Get-DownloadFile -sourceUrl "https://www.github.com/Microsoft/AL/archive/master.zip" -destinationFile $filename
+#    Download-File -sourceUrl "https://www.github.com/Microsoft/AL/archive/master.zip" -destinationFile $filename
 
 #    Remove-Item -Path "$folder\AL-master" -Force -Recurse -ErrorAction Ignore | Out-null
 #    [Reflection.Assembly]::LoadWithPartialName("System.IO.Compression.Filesystem") | Out-Null
