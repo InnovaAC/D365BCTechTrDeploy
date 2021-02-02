@@ -12,8 +12,7 @@ param
        [string]$registryUsername       = "",
        [string]$registryPassword       = "",
        [string]$appBacpacUri           = "",
-       [string]$tenantBacpacUri        = "",#TLS12 need for Download from Jan21
-       [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+       [string]$tenantBacpacUri        = "",
        [string]$clickonce              = "Y",
        [string]$licenseFileUri         = "",
        [string]$certificatePfxUrl      = "",
