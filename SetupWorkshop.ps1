@@ -1,9 +1,9 @@
-﻿. (Join-Path $PSScriptRoot "Install-VS2017Community.ps1")
+﻿#. (Join-Path $PSScriptRoot "Install-VS2017Community.ps1")
 
 try {
-    $Folder = "C:\DOWNLOAD\AdobeReader"
+    #$Folder = "C:\DOWNLOAD\AdobeReader"
     #$Filename = "$Folder\AdbeRdr11010_en_US.exe"
-    New-Item $Folder -itemtype directory -ErrorAction ignore | Out-Null
+    #New-Item $Folder -itemtype directory -ErrorAction ignore | Out-Null
     
     #if (!(Test-Path $Filename)) {
     #    Log "Downloading Adobe Reader"

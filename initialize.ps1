@@ -9,6 +9,7 @@ param
        [string]$adminPassword          = "P@ssword1",
 #       [string]$navDockerImage         = "microsoft/dynamics-nav:devpreview-finus",
        [string]$navDockerImage         = "mcr.microsoft.com/businesscentral/onprem:14.5.35970.0-es-ltsc2016",       
+       [string]$navArtifactsUrl        = "https://bcartifacts.azureedge.net/onprem/14.5.35970.0/es",
        [string]$registryUsername       = "",
        [string]$registryPassword       = "",
        [string]$appBacpacUri           = "",
@@ -65,6 +66,7 @@ if (Test-Path $settingsScript) {
     Get-VariableDeclaration -name "vmAdminUsername"        | Add-Content $settingsScript
     Get-VariableDeclaration -name "navAdminUsername"       | Add-Content $settingsScript
     Get-VariableDeclaration -name "navDockerImage"         | Add-Content $settingsScript
+    Get-VariableDeclaration -name "navArtifactsUrl"        | Add-Content $settingsScript
     Get-VariableDeclaration -name "registryUsername"       | Add-Content $settingsScript
     Get-VariableDeclaration -name "registryPassword"       | Add-Content $settingsScript
     Get-VariableDeclaration -name "appBacpacUri"           | Add-Content $settingsScript
@@ -198,12 +200,12 @@ if ($workshopFilesUrl -ne "") {
 	[System.IO.Compression.ZipFile]::ExtractToDirectory($workshopFilesFile, $workshopFilesFolder)
 }
 
-Log "Install Nav Container Helper from PowerShell Gallery"
+Log "Install BC Container Helper from PowerShell Gallery"
 #TLS12 need from April'20 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 #Install-Module -Name navcontainerhelper -RequiredVersion 0.2.5.1 -Force
-Install-Module -Name navcontainerhelper -Force
-Import-Module -Name navcontainerhelper -DisableNameChecking
+Install-Module -Name bccontainerhelper -Force
+Import-Module -Name bccontainerhelper -DisableNameChecking
 
 if ($certificatePfxUrl -ne "" -and $certificatePfxPassword -ne "") {
     Download-File -sourceUrl $certificatePfxUrl -destinationFile "c:\demo\certificate.pfx"

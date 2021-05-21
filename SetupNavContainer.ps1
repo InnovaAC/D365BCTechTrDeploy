@@ -5,7 +5,7 @@
     }
 }
 
-Import-Module -name navcontainerhelper -DisableNameChecking
+Import-Module -name bccontainerhelper -DisableNameChecking
 
 . (Join-Path $PSScriptRoot "settings.ps1")
 
@@ -23,45 +23,53 @@ New-Item $BackupFolder -itemtype directory -ErrorAction ignore | Out-Null
 if (!(Test-Path $Filename)) {
     Download-File -SourceUrl $BackupsUrl  -destinationFile $Filename
 }
+<#
 $inspect = docker inspect $imageName | ConvertFrom-Json
 $country = $inspect.Config.Labels.country
 $navVersion = $inspect.Config.Labels.version
 #$nav = $inspect.Config.Labels.nav
 $cu = $inspect.Config.Labels.cu
 $locale = Get-LocaleFromCountry $country
+#>
 
+rm $BackupFolder\*.bak
 [Reflection.Assembly]::LoadWithPartialName("System.IO.Compression.Filesystem") | Out-Null
-[System.IO.Compression.ZipFile]::ExtractToDirectory($Filename, $BackupFolder )
+[System.IO.Compression.ZipFile]::ExtractToDirectory($Filename, $BackupFolder)
 
 $ServersToCreate = Import-Csv "c:\demo\servers.csv" 
 $ServersToCreate | ForEach-Object {
     
     $containerName = $_.Server
     $bakupPath = "$BackupFolder\$($_.Backup)"
-    $containerFolder = Join-Path "C:\ProgramData\NavContainerHelper\Extensions\" $containerName
-    $dbBackupFileName = Split-Path $bakupPath -Leaf 
-    $myFolder = Join-Path $containerFolder "my" 
+    #$containerFolder = Join-Path "C:\ProgramData\NavContainerHelper\Extensions\" $containerName
+    #$dbBackupFileName = Split-Path $bakupPath -Leaf 
+    #$myFolder = Join-Path $containerFolder "my" 
     
     # CreateDevServerContainer -devContainerName $d -devImageName 'navdocker.azurecr.io/dynamics-nav:devpreview-september'
     # Copy-Item -Path "c:\myfolder\SetupNavUsers.ps1" -Destination "c:\DEMO\$d\my\SetupNavUsers.ps1"
 
     $securePassword = ConvertTo-SecureString -String $adminPassword -Key $passwordKey
     $credential = New-Object System.Management.Automation.PSCredential($navAdminUsername, $securePassword)
-    $additionalParameters = @("--env bakfile=""C:\Run\my\${dbBackupFileName}""",
-        "--env RemovePasswordKeyFile=N"                             
-    )
+    #$additionalParameters = @("--env bakfile=""C:\Run\my\${dbBackupFileName}""",
+    #    "--env RemovePasswordKeyFile=N"                             
+    #)
     #"--env publicFileSharePort=8080",                             
-    #--publish  8080:8080",
+    #--publish  8080:8080",art
     #"--publish  443:443", 
     #"--publish  7046-7049:7046-7049",                              
     #"
+ <#   
     $myScripts = @()
     Get-ChildItem -Path "c:\myfolder" | ForEach-Object { $myscripts += $_.FullName }
     $myScripts += $bakupPath;
     $myScripts += 'C:\DEMO\RestartNST.ps1';  
+ #>
     
     Log "Running $imageName (this will take a few minutes)"
-    New-NavContainer -accept_eula `
+    $artifactsurl = Get-BCArtifactUrl -type OnPrem -country "es" -version "14.5"
+    $artifactsurl = "https://bcartifacts.azureedge.net/onprem/14.5.35970.0/es"
+<#    
+    New-NavContainer -accept_eula`
         -accept_outdated `
         -containerName $containerName `
         -auth Windows `
@@ -72,11 +80,24 @@ $ServersToCreate | ForEach-Object {
         -additionalParameters $additionalParameters `
         -myScripts $myscripts `
         -licenseFile 'c:\demo\license.flf' `
+        -artifactUrl $artifactsurl
         -imageName $imageName
                           
     $country = Get-NavContainerCountry -containerOrImageName $imageName
     $navVersion = Get-NavContainerNavVersion -containerOrImageName $imageName
     $locale = Get-LocaleFromCountry $country
+#>
+    New-NavContainer -accept_eula `
+        -accept_outdated `
+        -containerName $containerName `
+        -auth Windows `
+        -includeCSide `
+        -useBestContainerOS `
+        -doNotExportObjectsToText `
+        -credential $credential `
+        -bakFile $bakupPath `
+        -licenseFile 'c:\demo\license.flf' `
+        -artifactUrl $artifactsurl
     
     if (Test-Path "c:\demo\objects.fob" -PathType Leaf) {
         Log "Importing c:\demo\objects.fob to container"
@@ -86,6 +107,8 @@ $ServersToCreate | ForEach-Object {
 
     # Copy .vsix and Certificate to container folder
     #$containerFolder = "C:\ProgramData\NavContainerHelper\Extensions\$containerName"
+
+<#    
     $containerFolder = $myfolder
     Log "Copying .vsix and Certificate to $containerFolder"
     docker exec -it $containerName powershell "copy-item -Path 'C:\Run\*.vsix' -Destination '$containerFolder' -force
@@ -113,12 +136,12 @@ if (Test-Path 'c:\inetpub\wwwroot\http\NAV' -PathType Container) {
         $store.add($pfx) 
         $store.close()
     }
-
+#>
     Log -color Green "Container output"
     docker logs $containerName | ForEach-Object { log $_ }
 
     Log -color Green "Container setup complete!"
-
+<#
     Log "Using image $imageName"
     Log "Country $country"
     Log "Version $navVersion"
@@ -129,4 +152,5 @@ if (Test-Path 'c:\inetpub\wwwroot\http\NAV' -PathType Container) {
     Log "Copying .vsix and Certificate to $demoFolder"
     docker exec -it $containerName powershell "copy-item -Path 'C:\Run\*.vsix' -Destination '$demoFolder' -force
 copy-item -Path 'C:\Run\*.cer' -Destination $demoFolder -force"
+#>
 }

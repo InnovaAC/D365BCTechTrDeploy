@@ -1,3 +1,19 @@
+Local machine Script:
+    -Invokes getnavworkshopvm.json ARM Template
+ARM Template deploys the machine and invokes initialize.ps1:
+    -Downloads all the scripts and files to the machine
+    -Invokes SetupStart.ps1
+SetupStart.ps1 invokes SetupVM.ps1
+SetupVM.ps1:
+    -Installs prerrequisites
+    -Invokes SetupNavContainer.ps1
+    -Invokes SetupDesktop.ps1
+    -Invokes SetupWorkshop.ps1
+    -Invokes FinalSetupScript.ps1 (if exists)
+    -Invokes Windows Update
+SetupNavContainer.ps1 builds Containers
+SetupDesktop.ps1 installs VSCode and shortcuts
+SetupWorkshop.ps1 installs .NET, Report Builder, GIT, P4Merge and Chrome
 
 # Contributing
 
