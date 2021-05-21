@@ -66,8 +66,8 @@ $ServersToCreate | ForEach-Object {
  #>
     
     Log "Running $imageName (this will take a few minutes)"
-    $artifactsurl = Get-BCArtifactUrl -type OnPrem -country "es" -version "14.5"
-    $artifactsurl = "https://bcartifacts.azureedge.net/onprem/14.5.35970.0/es"
+    #$artifactsurl = Get-BCArtifactUrl -type OnPrem -country "es" -version "14.5"
+    $artifactsurl = $navArtifactsUrl
 <#    
     New-NavContainer -accept_eula`
         -accept_outdated `
